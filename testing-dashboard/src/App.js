@@ -25,6 +25,11 @@ import DevOpsGuide from './pages/DevOpsGuide';
 import FrontendTesting from './pages/FrontendTesting';
 import PerformanceTesting from './pages/PerformanceTesting';
 import TestingChecklist from './pages/TestingChecklist';
+import SeleniumCucumber from './pages/SeleniumCucumber';
+import JiraWorkflow from './pages/JiraWorkflow';
+import AgileUAT from './pages/AgileUAT';
+import RegressionTesting from './pages/RegressionTesting';
+import SwaggerApiDocs from './pages/SwaggerApiDocs';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', section: 'Main' },
@@ -36,6 +41,7 @@ const MENU_ITEMS = [
   { id: 'defects', label: 'Defects / Bugs', icon: '\u{1F41B}', section: 'Testing' },
   { id: 'reports', label: 'Reports', icon: '\u{1F4C8}', section: 'Testing' },
   { id: 'json-test-data', label: 'JSON Test Data', icon: '\u{1F4E6}', section: 'Testing' },
+  { id: 'regression-testing', label: 'Regression Testing', icon: '\u{1F501}', section: 'Testing' },
   { id: 'testing-checklist', label: 'Testing Checklist', icon: '\u2705', section: 'Testing' },
   { id: 'operation-flow', label: 'Operation Flow', icon: '\u{1F504}', section: 'Monitoring' },
   { id: 'log-trace', label: 'Log & Trace', icon: '\u{1F4DC}', section: 'Monitoring' },
@@ -43,12 +49,16 @@ const MENU_ITEMS = [
   { id: 'sql-editor', label: 'SQL Editor', icon: '\u{1F4BE}', section: 'Tools' },
   { id: 'db-explorer', label: 'Database Explorer', icon: '\u{1F5C4}', section: 'Tools' },
   { id: 'soapui-guide', label: 'SoapUI Guide', icon: '\u{1F9EA}', section: 'Tools' },
+  { id: 'swagger-api-docs', label: 'API Documentation', icon: '\u{1F4C4}', section: 'Tools' },
   { id: 'banking-modules', label: 'Banking Modules', icon: '\u{1F3E6}', section: 'Business' },
   { id: 'banking-knowledge', label: 'Banking Knowledge', icon: '\u{1F4B0}', section: 'Business' },
   { id: 'process-flow', label: 'Process Flow', icon: '\u{1F500}', section: 'Business' },
   { id: 'security-scenarios', label: 'Security & AML', icon: '\u{1F512}', section: 'Business' },
   { id: 'devops-guide', label: 'DevOps Guide', icon: '\u{1F528}', section: 'DevOps' },
   { id: 'cicd-guide', label: 'CI/CD Pipeline', icon: '\u{2699}', section: 'DevOps' },
+  { id: 'selenium-cucumber', label: 'Selenium & Cucumber', icon: '\u{1F916}', section: 'Automation' },
+  { id: 'agile-uat', label: 'Agile & UAT', icon: '\u{1F3C3}', section: 'Automation' },
+  { id: 'jira-workflow', label: 'JIRA & Bug Lifecycle', icon: '\u{1F4CC}', section: 'Automation' },
   { id: 'challenges', label: 'Challenges & Edge Cases', icon: '\u26A1', section: 'Learning' },
   { id: 'interview-prep', label: 'Interview Q&A (30)', icon: '\u{1F3AF}', section: 'Learning' },
   { id: 'documentation', label: 'Documentation', icon: '\u{1F4D6}', section: 'Reference' },
@@ -83,6 +93,11 @@ function App() {
       case 'frontend-testing': return <FrontendTesting />;
       case 'performance-testing': return <PerformanceTesting />;
       case 'testing-checklist': return <TestingChecklist />;
+      case 'regression-testing': return <RegressionTesting />;
+      case 'selenium-cucumber': return <SeleniumCucumber />;
+      case 'jira-workflow': return <JiraWorkflow />;
+      case 'agile-uat': return <AgileUAT />;
+      case 'swagger-api-docs': return <SwaggerApiDocs />;
       case 'soapui-guide': return <SoapUIGuide />;
       case 'challenges': return <Challenges />;
       case 'interview-prep': return <InterviewPrep />;
