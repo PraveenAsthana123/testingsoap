@@ -1,0 +1,23 @@
+{
+  "name": "banking-qa-dashboard",
+  "version": "1.0.0",
+  "description": "Banking QA Testing Dashboard - React frontend with Express.js API backend",
+  "private": true,
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "npx concurrently \"cd backend && node server.js\" \"cd testing-dashboard && npm start\"",
+    "build": "cd testing-dashboard && npm run build",
+    "install-all": "cd backend && npm install && cd ../testing-dashboard && npm install",
+    "test": "cd testing-dashboard && npm test -- --watchAll=false",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "keywords": [
+    "banking",
+    "qa",
+    "testing",
+    "dashboard"
+  ],
+  "license": "ISC"
+}
