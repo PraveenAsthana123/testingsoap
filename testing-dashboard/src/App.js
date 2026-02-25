@@ -30,6 +30,7 @@ import JiraWorkflow from './pages/JiraWorkflow';
 import AgileUAT from './pages/AgileUAT';
 import RegressionTesting from './pages/RegressionTesting';
 import SwaggerApiDocs from './pages/SwaggerApiDocs';
+import AutomationHub from './pages/AutomationHub';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', section: 'Main' },
@@ -56,6 +57,7 @@ const MENU_ITEMS = [
   { id: 'security-scenarios', label: 'Security & AML', icon: '\u{1F512}', section: 'Business' },
   { id: 'devops-guide', label: 'DevOps Guide', icon: '\u{1F528}', section: 'DevOps' },
   { id: 'cicd-guide', label: 'CI/CD Pipeline', icon: '\u{2699}', section: 'DevOps' },
+  { id: 'automation-hub', label: 'Automation Hub', icon: '\u{1F3AF}', section: 'Automation' },
   { id: 'selenium-cucumber', label: 'Selenium & Cucumber', icon: '\u{1F916}', section: 'Automation' },
   { id: 'agile-uat', label: 'Agile & UAT', icon: '\u{1F3C3}', section: 'Automation' },
   { id: 'jira-workflow', label: 'JIRA & Bug Lifecycle', icon: '\u{1F4CC}', section: 'Automation' },
@@ -94,6 +96,7 @@ function App() {
       case 'performance-testing': return <PerformanceTesting />;
       case 'testing-checklist': return <TestingChecklist />;
       case 'regression-testing': return <RegressionTesting />;
+      case 'automation-hub': return <AutomationHub />;
       case 'selenium-cucumber': return <SeleniumCucumber />;
       case 'jira-workflow': return <JiraWorkflow />;
       case 'agile-uat': return <AgileUAT />;
