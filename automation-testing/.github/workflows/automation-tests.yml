@@ -1,0 +1,197 @@
+name: Automation Tests CI
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'automation-testing/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'automation-testing/**'
+  workflow_dispatch:
+    inputs:
+      test_suite:
+        description: 'Test suite to run'
+        required: true
+        default: 'smoke'
+        type: choice
+        options:
+          - smoke
+          - regression
+          - api
+          - all
+
+jobs:
+  # ========== Compile & Validate ==========
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Compile project
+        working-directory: automation-testing
+        run: mvn compile -q
+
+      - name: Validate POM
+        working-directory: automation-testing
+        run: mvn validate -q
+
+  # ========== API Tests (No Browser Needed) ==========
+  api-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Start backend server
+        working-directory: testing-dashboard
+        run: |
+          npm install
+          node ../server.js &
+          sleep 5
+
+      - name: Run API tests
+        working-directory: automation-testing
+        run: |
+          mvn test -Dcucumber.filter.tags="@api" \
+            -Dapi.base.url=http://localhost:3001 \
+            -q || true
+
+      - name: Upload API test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-reports
+          path: |
+            automation-testing/target/cucumber-reports/
+            automation-testing/target/surefire-reports/
+            automation-testing/target/extent-reports/
+
+  # ========== Smoke Tests (Chrome) ==========
+  smoke-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Start servers
+        working-directory: testing-dashboard
+        run: |
+          npm install
+          node ../server.js &
+          npx react-scripts start &
+          sleep 10
+
+      - name: Run smoke tests
+        working-directory: automation-testing
+        run: |
+          mvn test -Psmoke \
+            -Dbrowser=chrome \
+            -Dheadless=true \
+            -Dbase.url=http://localhost:3000 \
+            -Dapi.base.url=http://localhost:3001 \
+            -q || true
+
+      - name: Upload smoke test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-test-reports
+          path: |
+            automation-testing/target/cucumber-reports/
+            automation-testing/target/surefire-reports/
+            automation-testing/target/extent-reports/
+            automation-testing/target/screenshots/
+
+  # ========== Regression Tests (Parallel Chrome + API) ==========
+  regression-tests:
+    needs: [smoke-tests, api-tests]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && (github.event.inputs.test_suite == 'regression' || github.event.inputs.test_suite == 'all')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Start servers
+        working-directory: testing-dashboard
+        run: |
+          npm install
+          node ../server.js &
+          npx react-scripts start &
+          sleep 10
+
+      - name: Run regression tests
+        working-directory: automation-testing
+        run: |
+          mvn test -Pregression \
+            -Dbrowser=chrome \
+            -Dheadless=true \
+            -Dbase.url=http://localhost:3000 \
+            -Dapi.base.url=http://localhost:3001 \
+            -q || true
+
+      - name: Upload regression reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-test-reports
+          path: |
+            automation-testing/target/cucumber-reports/
+            automation-testing/target/surefire-reports/
+            automation-testing/target/extent-reports/
+            automation-testing/target/screenshots/
+
+  # ========== Publish Results ==========
+  publish-results:
+    needs: [api-tests, smoke-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Test Summary
+        run: |
+          echo "## Test Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Suite | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| API Tests | ${{ needs.api-tests.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Smoke Tests | ${{ needs.smoke-tests.result }} |" >> $GITHUB_STEP_SUMMARY

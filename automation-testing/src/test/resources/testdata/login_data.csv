@@ -1,0 +1,11 @@
+test_id,username,password,expected_result,description
+TC-LOGIN-001,admin,Test@123,success,Valid admin login
+TC-LOGIN-002,customer1,Test@123,success,Valid customer login
+TC-LOGIN-003,admin,WrongPass,failure,Wrong password
+TC-LOGIN-004,,Test@123,failure,Empty username
+TC-LOGIN-005,admin,,failure,Empty password
+TC-LOGIN-006,,, failure,Both empty
+TC-LOGIN-007,invalid_user,Test@123,failure,Non-existent user
+TC-LOGIN-008,admin,Test@123!@#,failure,Special chars in password
+TC-LOGIN-009,admin' OR 1=1--,Test@123,failure,SQL injection attempt
+TC-LOGIN-010,<script>alert(1)</script>,Test@123,failure,XSS injection attempt

@@ -1318,7 +1318,7 @@ function BankingModules() {
                     borderRadius: '6px',
                     fontSize: '13px'
                   }}>
-                    <span style={{ fontSize: '14px' }}>\u{1F4BE}</span>
+                    <span style={{ fontSize: '14px' }}>{'\u{1F4BE}'}</span>
                     <code style={{ fontWeight: 600, color: '#1a1a2e' }}>{table}</code>
                   </div>
                 ))}

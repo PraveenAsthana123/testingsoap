@@ -314,6 +314,214 @@ app.get('/api/sessions', (req, res) => {
 });
 
 // ========================================
+// AUTOMATION TEST EXECUTION TRACKING
+// ========================================
+
+// Create automation tracking tables
+db.exec(`
+  CREATE TABLE IF NOT EXISTS automation_runs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    run_id TEXT UNIQUE NOT NULL,
+    suite_name TEXT NOT NULL,
+    profile TEXT DEFAULT 'default',
+    browser TEXT DEFAULT 'chrome',
+    environment TEXT DEFAULT 'QA',
+    status TEXT DEFAULT 'running',
+    total_tests INTEGER DEFAULT 0,
+    passed INTEGER DEFAULT 0,
+    failed INTEGER DEFAULT 0,
+    skipped INTEGER DEFAULT 0,
+    pass_rate REAL DEFAULT 0,
+    duration_ms INTEGER DEFAULT 0,
+    started_at TEXT DEFAULT (datetime('now')),
+    completed_at TEXT,
+    triggered_by TEXT DEFAULT 'manual',
+    report_path TEXT
+  );
+
+  CREATE TABLE IF NOT EXISTS automation_results (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    run_id TEXT NOT NULL,
+    scenario_name TEXT NOT NULL,
+    feature TEXT NOT NULL,
+    tags TEXT,
+    status TEXT NOT NULL,
+    duration_ms INTEGER DEFAULT 0,
+    error_message TEXT,
+    screenshot_path TEXT,
+    step_details TEXT,
+    executed_at TEXT DEFAULT (datetime('now')),
+    FOREIGN KEY (run_id) REFERENCES automation_runs(run_id)
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_auto_runs_status ON automation_runs(status);
+  CREATE INDEX IF NOT EXISTS idx_auto_runs_date ON automation_runs(started_at);
+  CREATE INDEX IF NOT EXISTS idx_auto_results_run ON automation_results(run_id);
+  CREATE INDEX IF NOT EXISTS idx_auto_results_status ON automation_results(status);
+`);
+
+// Get all automation runs
+app.get('/api/automation/runs', (req, res) => {
+  const { status, profile, limit } = req.query;
+  let sql = 'SELECT * FROM automation_runs WHERE 1=1';
+  const params = [];
+  if (status) { sql += ' AND status = ?'; params.push(status); }
+  if (profile) { sql += ' AND profile = ?'; params.push(profile); }
+  sql += ' ORDER BY started_at DESC';
+  if (limit) { sql += ' LIMIT ?'; params.push(parseInt(limit)); }
+  const rows = db.prepare(sql).all(...params);
+  res.json(rows);
+});
+
+// Get single automation run
+app.get('/api/automation/runs/:runId', (req, res) => {
+  const run = db.prepare('SELECT * FROM automation_runs WHERE run_id = ?').get(req.params.runId);
+  if (!run) return res.status(404).json({ detail: 'Run not found' });
+  const results = db.prepare('SELECT * FROM automation_results WHERE run_id = ? ORDER BY executed_at').all(req.params.runId);
+  res.json({ ...run, results });
+});
+
+// Create new automation run
+app.post('/api/automation/runs', (req, res) => {
+  const { suite_name, profile, browser, environment, triggered_by } = req.body;
+  const run_id = 'RUN-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+  db.prepare(`
+    INSERT INTO automation_runs (run_id, suite_name, profile, browser, environment, triggered_by)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `).run(run_id, suite_name, profile || 'default', browser || 'chrome', environment || 'QA', triggered_by || 'dashboard');
+  const run = db.prepare('SELECT * FROM automation_runs WHERE run_id = ?').get(run_id);
+  res.status(201).json(run);
+});
+
+// Update automation run (complete it)
+app.put('/api/automation/runs/:runId', (req, res) => {
+  const { status, total_tests, passed, failed, skipped, duration_ms, report_path } = req.body;
+  const pass_rate = total_tests > 0 ? (passed / total_tests * 100) : 0;
+  db.prepare(`
+    UPDATE automation_runs
+    SET status = ?, total_tests = ?, passed = ?, failed = ?, skipped = ?,
+        pass_rate = ?, duration_ms = ?, completed_at = datetime('now'), report_path = ?
+    WHERE run_id = ?
+  `).run(status, total_tests, passed, failed, skipped, pass_rate, duration_ms, report_path, req.params.runId);
+  const run = db.prepare('SELECT * FROM automation_runs WHERE run_id = ?').get(req.params.runId);
+  res.json(run);
+});
+
+// Add test result to a run
+app.post('/api/automation/runs/:runId/results', (req, res) => {
+  const { scenario_name, feature, tags, status, duration_ms, error_message, screenshot_path, step_details } = req.body;
+  db.prepare(`
+    INSERT INTO automation_results (run_id, scenario_name, feature, tags, status, duration_ms, error_message, screenshot_path, step_details)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(req.params.runId, scenario_name, feature, tags, status, duration_ms || 0, error_message, screenshot_path, step_details);
+
+  // Update run counts
+  const counts = db.prepare(`
+    SELECT
+      COUNT(*) as total,
+      SUM(CASE WHEN status = 'passed' THEN 1 ELSE 0 END) as passed,
+      SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed,
+      SUM(CASE WHEN status = 'skipped' THEN 1 ELSE 0 END) as skipped
+    FROM automation_results WHERE run_id = ?
+  `).get(req.params.runId);
+
+  db.prepare(`
+    UPDATE automation_runs SET total_tests = ?, passed = ?, failed = ?, skipped = ?,
+    pass_rate = CASE WHEN ? > 0 THEN (CAST(? AS REAL) / ? * 100) ELSE 0 END
+    WHERE run_id = ?
+  `).run(counts.total, counts.passed, counts.failed, counts.skipped,
+         counts.total, counts.passed, counts.total, req.params.runId);
+
+  res.status(201).json({ message: 'Result added' });
+});
+
+// Get automation stats (dashboard summary)
+app.get('/api/automation/stats', (req, res) => {
+  const totalRuns = db.prepare('SELECT COUNT(*) as count FROM automation_runs').get();
+  const lastRun = db.prepare('SELECT * FROM automation_runs ORDER BY started_at DESC LIMIT 1').get();
+  const avgPassRate = db.prepare('SELECT AVG(pass_rate) as avg FROM automation_runs WHERE status = ?').get('completed');
+  const totalScenarios = db.prepare('SELECT COUNT(*) as count FROM automation_results').get();
+  const passedScenarios = db.prepare("SELECT COUNT(*) as count FROM automation_results WHERE status = 'passed'").get();
+  const failedScenarios = db.prepare("SELECT COUNT(*) as count FROM automation_results WHERE status = 'failed'").get();
+
+  const runsByProfile = db.prepare(`
+    SELECT profile, COUNT(*) as count, AVG(pass_rate) as avg_pass_rate
+    FROM automation_runs WHERE status = 'completed'
+    GROUP BY profile
+  `).all();
+
+  const recentRuns = db.prepare(`
+    SELECT run_id, suite_name, profile, status, total_tests, passed, failed, pass_rate,
+           duration_ms, started_at, completed_at
+    FROM automation_runs ORDER BY started_at DESC LIMIT 10
+  `).all();
+
+  res.json({
+    totalRuns: totalRuns.count,
+    lastRun,
+    avgPassRate: avgPassRate ? avgPassRate.avg : 0,
+    totalScenarios: totalScenarios.count,
+    passedScenarios: passedScenarios.count,
+    failedScenarios: failedScenarios.count,
+    runsByProfile,
+    recentRuns
+  });
+});
+
+// Delete automation run
+app.delete('/api/automation/runs/:runId', (req, res) => {
+  db.prepare('DELETE FROM automation_results WHERE run_id = ?').run(req.params.runId);
+  db.prepare('DELETE FROM automation_runs WHERE run_id = ?').run(req.params.runId);
+  res.json({ message: 'Run deleted' });
+});
+
+// ========================================
+// HEALTH CHECK
+// ========================================
+app.get('/api/health', (req, res) => {
+  try {
+    db.prepare('SELECT 1').get();
+    res.json({ status: 'ok', database: 'connected', timestamp: new Date().toISOString() });
+  } catch (err) {
+    res.status(500).json({ status: 'error', database: 'disconnected', error: err.message });
+  }
+});
+
+// ========================================
+// REPORTS SUMMARY
+// ========================================
+app.get('/api/reports/summary', (req, res) => {
+  const testStats = db.prepare(`
+    SELECT
+      COUNT(*) as total,
+      SUM(CASE WHEN status = 'pass' THEN 1 ELSE 0 END) as passed,
+      SUM(CASE WHEN status = 'fail' THEN 1 ELSE 0 END) as failed,
+      SUM(CASE WHEN status = 'blocked' THEN 1 ELSE 0 END) as blocked,
+      SUM(CASE WHEN status = 'not_run' THEN 1 ELSE 0 END) as not_run
+    FROM test_cases
+  `).get();
+
+  const defectStats = db.prepare(`
+    SELECT
+      COUNT(*) as total,
+      SUM(CASE WHEN status = 'open' THEN 1 ELSE 0 END) as open_count,
+      SUM(CASE WHEN status = 'closed' THEN 1 ELSE 0 END) as closed_count
+    FROM defects
+  `).get();
+
+  const autoStats = db.prepare(`
+    SELECT COUNT(*) as total_runs, AVG(pass_rate) as avg_pass_rate
+    FROM automation_runs WHERE status = 'completed'
+  `).get();
+
+  res.json({
+    testCases: testStats,
+    defects: defectStats,
+    automation: autoStats
+  });
+});
+
+// ========================================
 // SERVE REACT STATIC BUILD (Production)
 // ========================================
 const fs = require('fs');

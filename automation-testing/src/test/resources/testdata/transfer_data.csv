@@ -1,0 +1,13 @@
+test_id,from_account,to_account,amount,transfer_type,expected_result,description
+TC-TXN-001,ACC-SAV-001,ACC-CUR-001,25000,own_account,success,Own account transfer
+TC-TXN-002,ACC-SAV-001,1234567890,50000,NEFT,success,NEFT transfer
+TC-TXN-003,ACC-SAV-001,ACC-CUR-001,99999999,own_account,failure,Insufficient balance
+TC-TXN-004,ACC-SAV-001,ACC-CUR-001,0,own_account,failure,Zero amount
+TC-TXN-005,ACC-SAV-001,ACC-CUR-001,-500,own_account,failure,Negative amount
+TC-TXN-006,ACC-SAV-001,ACC-CUR-001,abc,own_account,failure,Non-numeric amount
+TC-TXN-007,ACC-SAV-001,ACC-CUR-001,10000001,own_account,failure,Exceeds daily limit
+TC-TXN-008,ACC-SAV-001,ACC-CUR-001,0.001,own_account,failure,Below minimum amount
+TC-TXN-009,ACC-SAV-001,ACC-BLOCKED-001,1000,own_account,failure,Blocked account
+TC-TXN-010,ACC-SAV-001,ACC-CUR-001,100000,RTGS,success,RTGS high-value transfer
+TC-TXN-011,ACC-SAV-001,ACC-CUR-001,500,IMPS,success,IMPS instant transfer
+TC-TXN-012,ACC-SAV-001,9876543210,15000,UPI,success,UPI transfer

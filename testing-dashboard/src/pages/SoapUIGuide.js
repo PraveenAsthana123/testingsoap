@@ -216,10 +216,10 @@ log.info("Transfer validated: txn=" + json.transactionId)`,
         codeBlock: {
           title: 'Sample REST Request -- Create Account',
           language: 'json',
-          code: `POST ${BASE_URL}/api/v1/accounts
+          code: `POST \${BASE_URL}/api/v1/accounts
 Headers:
   Content-Type: application/json
-  Authorization: Bearer ${AUTH_TOKEN}
+  Authorization: Bearer \${AUTH_TOKEN}
   X-Idempotency-Key: 550e8400-e29b-41d4-a716-446655440000
 
 Body:

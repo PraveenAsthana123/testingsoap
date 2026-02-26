@@ -31,6 +31,21 @@ import AgileUAT from './pages/AgileUAT';
 import RegressionTesting from './pages/RegressionTesting';
 import SwaggerApiDocs from './pages/SwaggerApiDocs';
 import AutomationHub from './pages/AutomationHub';
+import TechStack from './pages/TechStack';
+import MobileTesting from './pages/MobileTesting';
+import TestingTypes from './pages/TestingTypes';
+import BankingUseCases from './pages/BankingUseCases';
+import ChatTesting from './pages/ChatTesting';
+import ComplianceTesting from './pages/ComplianceTesting';
+import AdvancedTesting from './pages/AdvancedTesting';
+import DocumentVerification from './pages/DocumentVerification';
+import ObservabilityTesting from './pages/ObservabilityTesting';
+import AccessibilityTesting from './pages/AccessibilityTesting';
+import EmployeeTesting from './pages/EmployeeTesting';
+import SoapInterviewGuide from './pages/SoapInterviewGuide';
+import InterviewStrategies from './pages/InterviewStrategies';
+import ApiTestingScript from './pages/ApiTestingScript';
+import SoapUIWorkflow from './pages/SoapUIWorkflow';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', section: 'Main' },
@@ -44,7 +59,17 @@ const MENU_ITEMS = [
   { id: 'json-test-data', label: 'JSON Test Data', icon: '\u{1F4E6}', section: 'Testing' },
   { id: 'regression-testing', label: 'Regression Testing', icon: '\u{1F501}', section: 'Testing' },
   { id: 'testing-checklist', label: 'Testing Checklist', icon: '\u2705', section: 'Testing' },
+  { id: 'testing-types', label: 'Testing Types', icon: '\u{1F9EA}', section: 'Testing' },
+  { id: 'banking-usecases', label: 'Banking Use Cases', icon: '\u{1F4B3}', section: 'Testing' },
+  { id: 'advanced-testing', label: 'Advanced Testing', icon: '\u{1F9E0}', section: 'Testing' },
+  { id: 'chat-testing', label: 'Chat Testing', icon: '\u{1F4AC}', section: 'Testing' },
+  { id: 'compliance-testing', label: 'AML/Fraud/Anomaly', icon: '\u{1F6E1}', section: 'Testing' },
+  { id: 'document-verification', label: 'Document & KYC', icon: '\u{1F4C3}', section: 'Testing' },
+  { id: 'mobile-testing', label: 'Mobile Testing', icon: '\u{1F4F1}', section: 'Testing' },
+  { id: 'accessibility-testing', label: 'Accessibility Testing', icon: '\u267F', section: 'Testing' },
+  { id: 'employee-testing', label: 'Employee Scenarios', icon: '\u{1F464}', section: 'Testing' },
   { id: 'operation-flow', label: 'Operation Flow', icon: '\u{1F504}', section: 'Monitoring' },
+  { id: 'observability-testing', label: 'Observability', icon: '\u{1F50D}', section: 'Monitoring' },
   { id: 'log-trace', label: 'Log & Trace', icon: '\u{1F4DC}', section: 'Monitoring' },
   { id: 'api-tester', label: 'API Tester', icon: '\u{1F680}', section: 'Tools' },
   { id: 'sql-editor', label: 'SQL Editor', icon: '\u{1F4BE}', section: 'Tools' },
@@ -63,6 +88,11 @@ const MENU_ITEMS = [
   { id: 'jira-workflow', label: 'JIRA & Bug Lifecycle', icon: '\u{1F4CC}', section: 'Automation' },
   { id: 'challenges', label: 'Challenges & Edge Cases', icon: '\u26A1', section: 'Learning' },
   { id: 'interview-prep', label: 'Interview Q&A (30)', icon: '\u{1F3AF}', section: 'Learning' },
+  { id: 'soap-interview-guide', label: 'SOAP Interview Guide', icon: '\u{1F4DD}', section: 'Learning' },
+  { id: 'interview-strategies', label: 'Interview Strategies', icon: '\u{1F3AD}', section: 'Learning' },
+  { id: 'api-testing-script', label: 'API Testing Script', icon: '\u{1F399}', section: 'Learning' },
+  { id: 'soapui-workflow', label: 'SoapUI Workflow', icon: '\u{1F9F9}', section: 'Learning' },
+  { id: 'tech-stack', label: 'Tech Stack', icon: '\u{1F4BB}', section: 'Reference' },
   { id: 'documentation', label: 'Documentation', icon: '\u{1F4D6}', section: 'Reference' },
 ];
 
@@ -102,8 +132,23 @@ function App() {
       case 'agile-uat': return <AgileUAT />;
       case 'swagger-api-docs': return <SwaggerApiDocs />;
       case 'soapui-guide': return <SoapUIGuide />;
+      case 'tech-stack': return <TechStack />;
+      case 'mobile-testing': return <MobileTesting />;
+      case 'testing-types': return <TestingTypes />;
+      case 'banking-usecases': return <BankingUseCases />;
+      case 'chat-testing': return <ChatTesting />;
+      case 'compliance-testing': return <ComplianceTesting />;
+      case 'advanced-testing': return <AdvancedTesting />;
+      case 'document-verification': return <DocumentVerification />;
+      case 'observability-testing': return <ObservabilityTesting />;
+      case 'accessibility-testing': return <AccessibilityTesting />;
+      case 'employee-testing': return <EmployeeTesting />;
       case 'challenges': return <Challenges />;
       case 'interview-prep': return <InterviewPrep />;
+      case 'soap-interview-guide': return <SoapInterviewGuide />;
+      case 'interview-strategies': return <InterviewStrategies />;
+      case 'api-testing-script': return <ApiTestingScript />;
+      case 'soapui-workflow': return <SoapUIWorkflow />;
       case 'documentation': return <Documentation />;
       default: return <Dashboard />;
     }

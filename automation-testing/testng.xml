@@ -25,5 +25,7 @@
 
     <listeners>
         <listener class-name="org.testng.reporters.EmailableReporter2"/>
+        <listener class-name="com.banking.listeners.TestListener"/>
+        <listener class-name="com.banking.listeners.RetryTransformer"/>
     </listeners>
 </suite>

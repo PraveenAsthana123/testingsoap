@@ -1,0 +1,11 @@
+customer_id,first_name,last_name,email,phone,pan_number,aadhar,account_type,branch
+CUST001,Rajesh,Kumar,rajesh.kumar@email.com,9876543210,ABCPK1234A,123456789012,Savings,Mumbai Main
+CUST002,Priya,Sharma,priya.sharma@email.com,9876543211,DEFPS5678B,234567890123,Current,Delhi North
+CUST003,Amit,Patel,amit.patel@email.com,9876543212,GHIPP9012C,345678901234,Savings,Bangalore HSR
+CUST004,Sneha,Gupta,sneha.gupta@email.com,9876543213,JKLSG3456D,456789012345,Current,Chennai Central
+CUST005,Vikram,Singh,vikram.singh@email.com,9876543214,MNOSK7890E,567890123456,NRE,Pune Kothrud
+CUST006,Anjali,Mehta,anjali.mehta@email.com,9876543215,PQRAM1234F,678901234567,Savings,Hyderabad Jubilee
+CUST007,Rahul,Verma,rahul.verma@email.com,9876543216,STUAV5678G,789012345678,Current,Kolkata Park Street
+CUST008,Deepa,Nair,deepa.nair@email.com,9876543217,WXYNN9012H,890123456789,Savings,Kochi Marine Drive
+CUST009,Karthik,Iyer,karthik.iyer@email.com,9876543218,YZAKI3456I,901234567890,FD,Chennai Adyar
+CUST010,Meera,Reddy,meera.reddy@email.com,9876543219,BCDAR7890J,012345678901,RD,Hyderabad Banjara
