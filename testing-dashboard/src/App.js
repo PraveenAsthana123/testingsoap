@@ -46,6 +46,8 @@ import SoapInterviewGuide from './pages/SoapInterviewGuide';
 import InterviewStrategies from './pages/InterviewStrategies';
 import ApiTestingScript from './pages/ApiTestingScript';
 import SoapUIWorkflow from './pages/SoapUIWorkflow';
+import LinkedInPosts from './pages/LinkedInPosts';
+import BankingApiTestSuite from './pages/BankingApiTestSuite';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', section: 'Main' },
@@ -92,6 +94,8 @@ const MENU_ITEMS = [
   { id: 'interview-strategies', label: 'Interview Strategies', icon: '\u{1F3AD}', section: 'Learning' },
   { id: 'api-testing-script', label: 'API Testing Script', icon: '\u{1F399}', section: 'Learning' },
   { id: 'soapui-workflow', label: 'SoapUI Workflow', icon: '\u{1F9F9}', section: 'Learning' },
+  { id: 'linkedin-posts', label: 'LinkedIn Posts', icon: '\u{1F4F0}', section: 'Learning' },
+  { id: 'api-test-suite', label: 'API Test Suite', icon: '\u{1F9FF}', section: 'Testing' },
   { id: 'tech-stack', label: 'Tech Stack', icon: '\u{1F4BB}', section: 'Reference' },
   { id: 'documentation', label: 'Documentation', icon: '\u{1F4D6}', section: 'Reference' },
 ];
@@ -149,6 +153,8 @@ function App() {
       case 'interview-strategies': return <InterviewStrategies />;
       case 'api-testing-script': return <ApiTestingScript />;
       case 'soapui-workflow': return <SoapUIWorkflow />;
+      case 'linkedin-posts': return <LinkedInPosts />;
+      case 'api-test-suite': return <BankingApiTestSuite />;
       case 'documentation': return <Documentation />;
       default: return <Dashboard />;
     }
