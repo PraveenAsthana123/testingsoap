@@ -52,6 +52,7 @@ import DataTesting from './pages/DataTesting';
 import SqlMasterGuide from './pages/SqlMasterGuide';
 import ApiTestingScenarios from './pages/ApiTestingScenarios';
 import UseCaseEditor from './pages/UseCaseEditor';
+import AutomationTestingLab from './pages/AutomationTestingLab';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', section: 'Main' },
@@ -104,6 +105,7 @@ const MENU_ITEMS = [
   { id: 'sql-master-guide', label: 'SQL Master Guide', icon: '\u{1F4DD}', section: 'Tools' },
   { id: 'api-testing-scenarios', label: 'API Scenarios', icon: '\u{1F310}', section: 'Testing' },
   { id: 'usecase-editor', label: 'Use Case Editor', icon: '\u{1F4DD}', section: 'Tools' },
+  { id: 'automation-lab', label: 'Automation Lab', icon: '\u{1F916}', section: 'Automation' },
   { id: 'tech-stack', label: 'Tech Stack', icon: '\u{1F4BB}', section: 'Reference' },
   { id: 'documentation', label: 'Documentation', icon: '\u{1F4D6}', section: 'Reference' },
 ];
@@ -167,6 +169,7 @@ function App() {
       case 'sql-master-guide': return <SqlMasterGuide />;
       case 'api-testing-scenarios': return <ApiTestingScenarios />;
       case 'usecase-editor': return <UseCaseEditor />;
+      case 'automation-lab': return <AutomationTestingLab />;
       case 'documentation': return <Documentation />;
       default: return <Dashboard />;
     }
