@@ -72,6 +72,16 @@ import SecurityLevelsLab from './pages/SecurityLevelsLab';
 import RAGTestingLab from './pages/RAGTestingLab';
 import AgenticAILab from './pages/AgenticAILab';
 import WebAppTestingHub from './pages/WebAppTestingHub';
+import ComplianceRegulatoryArch from './pages/ComplianceRegulatoryArch';
+import ContractTestingArch from './pages/ContractTestingArch';
+import DataPipelineArch from './pages/DataPipelineArch';
+import MessageQueueArch from './pages/MessageQueueArch';
+import MicroservicesArch from './pages/MicroservicesArch';
+import ChaosResilienceArch from './pages/ChaosResilienceArch';
+import CloudNativeTestingArch from './pages/CloudNativeTestingArch';
+import PaymentGatewayArch from './pages/PaymentGatewayArch';
+import MainframeBankingArch from './pages/MainframeBankingArch';
+import ConcurrencyTestingArch from './pages/ConcurrencyTestingArch';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', section: 'Main' },
@@ -144,6 +154,16 @@ const MENU_ITEMS = [
   { id: 'rag-testing-lab', label: 'RAG Testing Lab', icon: '\u{1F9E0}', section: 'AI & ML' },
   { id: 'agentic-ai-lab', label: 'Agentic AI Lab', icon: '\u{1F916}', section: 'AI & ML' },
   { id: 'webapp-testing-hub', label: 'Web App Testing Hub', icon: '\u{1F310}', section: 'Testing' },
+  { id: 'compliance-regulatory-arch', label: 'Compliance & Regulatory', icon: '\u{1F4DC}', section: 'Architecture' },
+  { id: 'contract-testing-arch', label: 'Contract Testing', icon: '\u{1F4DD}', section: 'Architecture' },
+  { id: 'data-pipeline-arch', label: 'Data Pipeline & ETL', icon: '\u{1F4CA}', section: 'Architecture' },
+  { id: 'message-queue-arch', label: 'Message Queue', icon: '\u{1F4E8}', section: 'Architecture' },
+  { id: 'microservices-arch', label: 'Microservices', icon: '\u{1F300}', section: 'Architecture' },
+  { id: 'chaos-resilience-arch', label: 'Chaos & Resilience', icon: '\u{1F4A5}', section: 'Architecture' },
+  { id: 'cloud-native-arch', label: 'Cloud Native', icon: '\u2601\uFE0F', section: 'Architecture' },
+  { id: 'payment-gateway-arch', label: 'Payment Gateway', icon: '\u{1F4B3}', section: 'Architecture' },
+  { id: 'mainframe-banking-arch', label: 'Mainframe Banking', icon: '\u{1F3E6}', section: 'Architecture' },
+  { id: 'concurrency-testing-arch', label: 'Concurrency Testing', icon: '\u26A1', section: 'Architecture' },
   { id: 'tech-stack', label: 'Tech Stack', icon: '\u{1F4BB}', section: 'Reference' },
   { id: 'documentation', label: 'Documentation', icon: '\u{1F4D6}', section: 'Reference' },
 ];
@@ -227,6 +247,16 @@ function App() {
       case 'rag-testing-lab': return <RAGTestingLab />;
       case 'agentic-ai-lab': return <AgenticAILab />;
       case 'webapp-testing-hub': return <WebAppTestingHub />;
+      case 'compliance-regulatory-arch': return <ComplianceRegulatoryArch />;
+      case 'contract-testing-arch': return <ContractTestingArch />;
+      case 'data-pipeline-arch': return <DataPipelineArch />;
+      case 'message-queue-arch': return <MessageQueueArch />;
+      case 'microservices-arch': return <MicroservicesArch />;
+      case 'chaos-resilience-arch': return <ChaosResilienceArch />;
+      case 'cloud-native-arch': return <CloudNativeTestingArch />;
+      case 'payment-gateway-arch': return <PaymentGatewayArch />;
+      case 'mainframe-banking-arch': return <MainframeBankingArch />;
+      case 'concurrency-testing-arch': return <ConcurrencyTestingArch />;
       case 'documentation': return <Documentation />;
       default: return <Dashboard />;
     }
