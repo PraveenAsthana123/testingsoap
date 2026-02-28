@@ -71,6 +71,7 @@ import UIUXTestingLab from './pages/UIUXTestingLab';
 import SecurityLevelsLab from './pages/SecurityLevelsLab';
 import RAGTestingLab from './pages/RAGTestingLab';
 import AgenticAILab from './pages/AgenticAILab';
+import WebAppTestingHub from './pages/WebAppTestingHub';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', section: 'Main' },
@@ -142,6 +143,7 @@ const MENU_ITEMS = [
   { id: 'security-levels-lab', label: 'Security Levels Lab', icon: '\u{1F6E1}', section: 'Security' },
   { id: 'rag-testing-lab', label: 'RAG Testing Lab', icon: '\u{1F9E0}', section: 'AI & ML' },
   { id: 'agentic-ai-lab', label: 'Agentic AI Lab', icon: '\u{1F916}', section: 'AI & ML' },
+  { id: 'webapp-testing-hub', label: 'Web App Testing Hub', icon: '\u{1F310}', section: 'Testing' },
   { id: 'tech-stack', label: 'Tech Stack', icon: '\u{1F4BB}', section: 'Reference' },
   { id: 'documentation', label: 'Documentation', icon: '\u{1F4D6}', section: 'Reference' },
 ];
@@ -224,6 +226,7 @@ function App() {
       case 'security-levels-lab': return <SecurityLevelsLab />;
       case 'rag-testing-lab': return <RAGTestingLab />;
       case 'agentic-ai-lab': return <AgenticAILab />;
+      case 'webapp-testing-hub': return <WebAppTestingHub />;
       case 'documentation': return <Documentation />;
       default: return <Dashboard />;
     }
