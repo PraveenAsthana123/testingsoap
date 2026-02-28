@@ -55,6 +55,17 @@ import UseCaseEditor from './pages/UseCaseEditor';
 import AutomationTestingLab from './pages/AutomationTestingLab';
 import MobileTestingLab from './pages/MobileTestingLab';
 import WebAccessibilityLab from './pages/WebAccessibilityLab';
+import SecurityLayerLab from './pages/SecurityLayerLab';
+import JobWorkflowLab from './pages/JobWorkflowLab';
+import AuthIdentityLab from './pages/AuthIdentityLab';
+import InfraTestingLab from './pages/InfraTestingLab';
+import DevOpsTestingLab from './pages/DevOpsTestingLab';
+import CodeQualityLab from './pages/CodeQualityLab';
+import RPATestingLab from './pages/RPATestingLab';
+import AIMLTestingLab from './pages/AIMLTestingLab';
+import ErrorTestingLab from './pages/ErrorTestingLab';
+import ObservabilityLab from './pages/ObservabilityLab';
+import SystemHealthLab from './pages/SystemHealthLab';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', section: 'Main' },
@@ -110,6 +121,17 @@ const MENU_ITEMS = [
   { id: 'automation-lab', label: 'Automation Lab', icon: '\u{1F916}', section: 'Automation' },
   { id: 'mobile-testing-lab', label: 'Mobile Lab', icon: '\u{1F4F1}', section: 'Automation' },
   { id: 'web-accessibility-lab', label: 'Accessibility Lab', icon: '\u267F', section: 'Automation' },
+  { id: 'security-layer-lab', label: 'Security 7-Layer', icon: '\u{1F6E1}', section: 'Automation' },
+  { id: 'job-workflow-lab', label: 'Job & Workflow', icon: '\u{2699}', section: 'Automation' },
+  { id: 'auth-identity-lab', label: 'Auth & Identity', icon: '\u{1F511}', section: 'Automation' },
+  { id: 'infra-testing-lab', label: 'Infrastructure', icon: '\u{1F5A7}', section: 'Automation' },
+  { id: 'devops-testing-lab', label: 'DevOps CI/CD', icon: '\u{1F528}', section: 'Automation' },
+  { id: 'code-quality-lab', label: 'Code Quality', icon: '\u{1F4CA}', section: 'Automation' },
+  { id: 'rpa-testing-lab', label: 'RPA Testing', icon: '\u{1F916}', section: 'Automation' },
+  { id: 'aiml-testing-lab', label: 'AI/ML Testing', icon: '\u{1F9E0}', section: 'Automation' },
+  { id: 'error-testing-lab', label: 'Error Testing', icon: '\u{26A0}', section: 'Automation' },
+  { id: 'observability-lab', label: 'Observability Lab', icon: '\u{1F50D}', section: 'Monitoring' },
+  { id: 'system-health-lab', label: 'System Health Lab', icon: '\u{1F49A}', section: 'Monitoring' },
   { id: 'tech-stack', label: 'Tech Stack', icon: '\u{1F4BB}', section: 'Reference' },
   { id: 'documentation', label: 'Documentation', icon: '\u{1F4D6}', section: 'Reference' },
 ];
@@ -176,6 +198,17 @@ function App() {
       case 'automation-lab': return <AutomationTestingLab />;
       case 'mobile-testing-lab': return <MobileTestingLab />;
       case 'web-accessibility-lab': return <WebAccessibilityLab />;
+      case 'security-layer-lab': return <SecurityLayerLab />;
+      case 'job-workflow-lab': return <JobWorkflowLab />;
+      case 'auth-identity-lab': return <AuthIdentityLab />;
+      case 'infra-testing-lab': return <InfraTestingLab />;
+      case 'devops-testing-lab': return <DevOpsTestingLab />;
+      case 'code-quality-lab': return <CodeQualityLab />;
+      case 'rpa-testing-lab': return <RPATestingLab />;
+      case 'aiml-testing-lab': return <AIMLTestingLab />;
+      case 'error-testing-lab': return <ErrorTestingLab />;
+      case 'observability-lab': return <ObservabilityLab />;
+      case 'system-health-lab': return <SystemHealthLab />;
       case 'documentation': return <Documentation />;
       default: return <Dashboard />;
     }
