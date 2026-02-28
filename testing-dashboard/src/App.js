@@ -82,6 +82,8 @@ import CloudNativeTestingArch from './pages/CloudNativeTestingArch';
 import PaymentGatewayArch from './pages/PaymentGatewayArch';
 import MainframeBankingArch from './pages/MainframeBankingArch';
 import ConcurrencyTestingArch from './pages/ConcurrencyTestingArch';
+import ArchTestDataHub from './pages/ArchTestDataHub';
+import ArchTestResults from './pages/ArchTestResults';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', section: 'Main' },
@@ -164,6 +166,8 @@ const MENU_ITEMS = [
   { id: 'payment-gateway-arch', label: 'Payment Gateway', icon: '\u{1F4B3}', section: 'Architecture' },
   { id: 'mainframe-banking-arch', label: 'Mainframe Banking', icon: '\u{1F3E6}', section: 'Architecture' },
   { id: 'concurrency-testing-arch', label: 'Concurrency Testing', icon: '\u26A1', section: 'Architecture' },
+  { id: 'arch-test-data-hub', label: 'Arch Test Data Hub', icon: '\u{1F4CA}', section: 'Architecture' },
+  { id: 'arch-test-results', label: 'Arch Test Results', icon: '\u{1F4CB}', section: 'Architecture' },
   { id: 'tech-stack', label: 'Tech Stack', icon: '\u{1F4BB}', section: 'Reference' },
   { id: 'documentation', label: 'Documentation', icon: '\u{1F4D6}', section: 'Reference' },
 ];
@@ -257,6 +261,8 @@ function App() {
       case 'payment-gateway-arch': return <PaymentGatewayArch />;
       case 'mainframe-banking-arch': return <MainframeBankingArch />;
       case 'concurrency-testing-arch': return <ConcurrencyTestingArch />;
+      case 'arch-test-data-hub': return <ArchTestDataHub />;
+      case 'arch-test-results': return <ArchTestResults />;
       case 'documentation': return <Documentation />;
       default: return <Dashboard />;
     }
