@@ -66,6 +66,11 @@ import AIMLTestingLab from './pages/AIMLTestingLab';
 import ErrorTestingLab from './pages/ErrorTestingLab';
 import ObservabilityLab from './pages/ObservabilityLab';
 import SystemHealthLab from './pages/SystemHealthLab';
+import F12TestingLab from './pages/F12TestingLab';
+import UIUXTestingLab from './pages/UIUXTestingLab';
+import SecurityLevelsLab from './pages/SecurityLevelsLab';
+import RAGTestingLab from './pages/RAGTestingLab';
+import AgenticAILab from './pages/AgenticAILab';
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', section: 'Main' },
@@ -132,6 +137,11 @@ const MENU_ITEMS = [
   { id: 'error-testing-lab', label: 'Error Testing', icon: '\u{26A0}', section: 'Automation' },
   { id: 'observability-lab', label: 'Observability Lab', icon: '\u{1F50D}', section: 'Monitoring' },
   { id: 'system-health-lab', label: 'System Health Lab', icon: '\u{1F49A}', section: 'Monitoring' },
+  { id: 'f12-testing-lab', label: 'F12 DevTools Lab', icon: '\u{1F527}', section: 'Testing' },
+  { id: 'uiux-testing-lab', label: 'UI/UX Testing Lab', icon: '\u{1F3A8}', section: 'Testing' },
+  { id: 'security-levels-lab', label: 'Security Levels Lab', icon: '\u{1F6E1}', section: 'Security' },
+  { id: 'rag-testing-lab', label: 'RAG Testing Lab', icon: '\u{1F9E0}', section: 'AI & ML' },
+  { id: 'agentic-ai-lab', label: 'Agentic AI Lab', icon: '\u{1F916}', section: 'AI & ML' },
   { id: 'tech-stack', label: 'Tech Stack', icon: '\u{1F4BB}', section: 'Reference' },
   { id: 'documentation', label: 'Documentation', icon: '\u{1F4D6}', section: 'Reference' },
 ];
@@ -209,6 +219,11 @@ function App() {
       case 'error-testing-lab': return <ErrorTestingLab />;
       case 'observability-lab': return <ObservabilityLab />;
       case 'system-health-lab': return <SystemHealthLab />;
+      case 'f12-testing-lab': return <F12TestingLab />;
+      case 'uiux-testing-lab': return <UIUXTestingLab />;
+      case 'security-levels-lab': return <SecurityLevelsLab />;
+      case 'rag-testing-lab': return <RAGTestingLab />;
+      case 'agentic-ai-lab': return <AgenticAILab />;
       case 'documentation': return <Documentation />;
       default: return <Dashboard />;
     }
