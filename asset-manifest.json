@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/testingsoap/static/css/main.372e283d.css",
-    "main.js": "/testingsoap/static/js/main.cdeaabae.js",
+    "main.js": "/testingsoap/static/js/main.b8e029d2.js",
     "static/js/453.af8866ab.chunk.js": "/testingsoap/static/js/453.af8866ab.chunk.js",
     "index.html": "/testingsoap/index.html",
     "main.372e283d.css.map": "/testingsoap/static/css/main.372e283d.css.map",
-    "main.cdeaabae.js.map": "/testingsoap/static/js/main.cdeaabae.js.map",
+    "main.b8e029d2.js.map": "/testingsoap/static/js/main.b8e029d2.js.map",
     "453.af8866ab.chunk.js.map": "/testingsoap/static/js/453.af8866ab.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.372e283d.css",
-    "static/js/main.cdeaabae.js"
+    "static/js/main.b8e029d2.js"
   ]
 }
